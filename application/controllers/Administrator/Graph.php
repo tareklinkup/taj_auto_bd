@@ -21,11 +21,11 @@
         }
 
         public function getGraphData(){
-            // Monthly Record
-            $monthlyRecord = [];
-            $year = date('Y');
-            $month = date('m');
-            $dayNumber = cal_days_in_month(CAL_GREGORIAN, $month, $year);
+            //Monthly Record
+             $monthlyRecord = [];
+             $year = date('Y');
+             $month = date('m');
+             $dayNumber = cal_days_in_month(CAL_GREGORIAN, $month, $year);
             for($i = 1; $i <= $dayNumber; $i++){
                 $date = $year . '-' . $month . '-'. sprintf("%02d", $i);
                 $query = $this->db->query("
@@ -72,7 +72,7 @@
                 array_push($yearlyRecord, $sale);
             }
 
-            // Sales text for marquee
+            // // Sales text for marquee
             $sales = $this->db->query("
                 select 
                     concat(
@@ -110,7 +110,7 @@
                 and sm.SaleMaster_branchid = ?
             ", [date('m'), date('Y'), $this->branchId])->row()->total_amount;
 
-            // Today's Cash Collection
+            // // Today's Cash Collection
             $todaysCollection = $this->db->query("
                 select 
                 ifnull((
@@ -139,7 +139,7 @@
             // Cash Balance
             $cashBalance = $this->mt->getTransactionSummary()->cash_balance;
 
-            // Top Customers
+            // // Top Customers
             $topCustomers = $this->db->query("
                 select 
                 c.Customer_Name as customer_name,
@@ -152,7 +152,7 @@
                 limit 5
             ", $this->branchId)->result();
 
-            // Top Products
+            // // Top Products
             $topProducts = $this->db->query("
                 select 
                     p.Product_Name as product_name,
@@ -189,6 +189,7 @@
                 'customer_due' => $customerDue,
                 'bank_balance' => $bankBalance
             ];
+
 
             echo json_encode($responseData, JSON_NUMERIC_CHECK);
         }
